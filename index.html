@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Plant Care Confidence Dashboard</title>
+  <style>
+    :root {
+      --green-text: #2e7d32;
+      --green-bg: #edf7ed;
+      --orange-text: #c26b1f;
+      --orange-bg: #fdf3eb;
+      --red-text: #c62828;
+      --red-bg: #fdeff1;
+      --gray-text: #6b7280;
+    }
+
+    body {
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      margin: 2rem;
+      background-color: #f9fafb;
+      color: #1f2933;
+    }
+
+    h1 {
+      margin-bottom: 0.25rem;
+    }
+
+    h2 {
+      margin-top: 0;
+      color: #52606d;
+      font-weight: 500;
+    }
+
+    p.description {
+      max-width: 60ch;
+      color: #616e7c;
+      margin-bottom: 2rem;
+    }
+
+    .controls {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      margin-bottom: 1.5rem;
+    }
+
+    .controls button {
+      border: 1px solid #cbd2d9;
+      background-color: white;
+      border-radius: 999px;
+      padding: 0.5rem 1.25rem;
+      font-size: 0.9rem;
+      cursor: pointer;
+      color: #364152;
+      transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+    }
+
+    .controls button:hover {
+      background-color: #f0f4f8;
+    }
+
+    .controls button.active {
+      background-color: #243b53;
+      border-color: #243b53;
+      color: white;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background-color: white;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 15px 35px rgba(15, 23, 42, 0.08);
+    }
+
+    thead {
+      background-color: #102a43;
+      color: #e4ebf5;
+      text-transform: uppercase;
+      font-size: 0.75rem;
+      letter-spacing: 0.08em;
+    }
+
+    th, td {
+      padding: 0.85rem 1rem;
+      text-align: left;
+      border-bottom: 1px solid #e4e7eb;
+      vertical-align: top;
+    }
+
+    tbody tr:hover {
+      background-color: #f5f7fa;
+    }
+
+    td.plant {
+      font-weight: 600;
+    }
+
+    .confidence-badge {
+      border-radius: 10px;
+      padding: 0.75rem 0.9rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+      min-width: 160px;
+      font-size: 0.8rem;
+      transition: background-color 0.2s ease, color 0.2s ease;
+    }
+
+    .confidence-score {
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      font-size: 0.78rem;
+    }
+
+    .cell-value {
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: #1f2933;
+    }
+
+    .confidence-high {
+      background-color: var(--green-bg);
+      color: var(--green-text);
+    }
+
+    .confidence-medium {
+      background-color: var(--orange-bg);
+      color: var(--orange-text);
+    }
+
+    .confidence-low {
+      background-color: var(--red-bg);
+      color: var(--red-text);
+    }
+
+    .confidence-none {
+      background-color: #f8fafc;
+      color: var(--gray-text);
+    }
+
+    td.plant .cell-value {
+      font-weight: 600;
+      font-size: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <h1>Plant Care Confidence Dashboard</h1>
+  <h2>Seasonal guidance for thriving gardens</h2>
+  <p class="description">Explore a snapshot of recommended plants with their ideal growing conditions. Each cell displays a confidence score so you can quickly spot strong signals, then use the filter controls to focus on the level of certainty you need.</p>
+
+  <div class="controls" role="group" aria-label="Confidence filters">
+    <button type="button" class="active" aria-pressed="true" data-filter="all">Show All Scores</button>
+    <button type="button" aria-pressed="false" data-filter="high">High Confidence</button>
+    <button type="button" aria-pressed="false" data-filter="medium">Medium Confidence</button>
+    <button type="button" aria-pressed="false" data-filter="low">Low Confidence</button>
+    <button type="button" aria-pressed="false" data-filter="none">No Scores</button>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Plant</th>
+        <th>Bloom Type</th>
+        <th>Season</th>
+        <th>Light</th>
+        <th>Watering</th>
+        <th>Confidence</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr data-row-confidence="low">
+        <td class="plant" data-confidence-level="low" data-confidence-score="24% CONFIDENCE" data-value-text="Pansies">
+          <div class="confidence-badge confidence-low">
+            <span class="confidence-score">24% CONFIDENCE</span>
+            <span class="cell-value">Pansies</span>
+          </div>
+        </td>
+        <td data-confidence-level="low" data-confidence-score="30% CONFIDENCE" data-value-text="Annual">
+          <div class="confidence-badge confidence-low">
+            <span class="confidence-score">30% CONFIDENCE</span>
+            <span class="cell-value">Annual</span>
+          </div>
+        </td>
+        <td data-confidence-level="low" data-confidence-score="28% CONFIDENCE" data-value-text="Spring to Summer">
+          <div class="confidence-badge confidence-low">
+            <span class="confidence-score">28% CONFIDENCE</span>
+            <span class="cell-value">Spring to Summer</span>
+          </div>
+        </td>
+        <td data-confidence-level="low" data-confidence-score="18% CONFIDENCE" data-value-text="Full Sun">
+          <div class="confidence-badge confidence-low">
+            <span class="confidence-score">18% CONFIDENCE</span>
+            <span class="cell-value">Full Sun</span>
+          </div>
+        </td>
+        <td data-confidence-level="low" data-confidence-score="26% CONFIDENCE" data-value-text="1-2x per week">
+          <div class="confidence-badge confidence-low">
+            <span class="confidence-score">26% CONFIDENCE</span>
+            <span class="cell-value">1-2x per week</span>
+          </div>
+        </td>
+        <td class="confidence-summary" data-confidence-level="low" data-confidence-score="26% CONFIDENCE" data-value-text="Low · Spring trial">
+          <div class="confidence-badge confidence-low">
+            <span class="confidence-score">26% CONFIDENCE</span>
+            <span class="cell-value">Low · Spring trial</span>
+          </div>
+        </td>
+      </tr>
+      <tr data-row-confidence="medium">
+        <td class="plant" data-confidence-level="medium" data-confidence-score="68% CONFIDENCE" data-value-text="California Poppy">
+          <div class="confidence-badge confidence-medium">
+            <span class="confidence-score">68% CONFIDENCE</span>
+            <span class="cell-value">California Poppy</span>
+          </div>
+        </td>
+        <td data-confidence-level="medium" data-confidence-score="61% CONFIDENCE" data-value-text="Annual">
+          <div class="confidence-badge confidence-medium">
+            <span class="confidence-score">61% CONFIDENCE</span>
+            <span class="cell-value">Annual</span>
+          </div>
+        </td>
+        <td data-confidence-level="medium" data-confidence-score="57% CONFIDENCE" data-value-text="Early Summer">
+          <div class="confidence-badge confidence-medium">
+            <span class="confidence-score">57% CONFIDENCE</span>
+            <span class="cell-value">Early Summer</span>
+          </div>
+        </td>
+        <td data-confidence-level="low" data-confidence-score="34% CONFIDENCE" data-value-text="Full Sun">
+          <div class="confidence-badge confidence-low">
+            <span class="confidence-score">34% CONFIDENCE</span>
+            <span class="cell-value">Full Sun</span>
+          </div>
+        </td>
+        <td data-confidence-level="medium" data-confidence-score="53% CONFIDENCE" data-value-text="Weekly">
+          <div class="confidence-badge confidence-medium">
+            <span class="confidence-score">53% CONFIDENCE</span>
+            <span class="cell-value">Weekly</span>
+          </div>
+        </td>
+        <td class="confidence-summary" data-confidence-level="medium" data-confidence-score="58% CONFIDENCE" data-value-text="Medium · Summer bloom">
+          <div class="confidence-badge confidence-medium">
+            <span class="confidence-score">58% CONFIDENCE</span>
+            <span class="cell-value">Medium · Summer bloom</span>
+          </div>
+        </td>
+      </tr>
+      <tr data-row-confidence="low">
+        <td class="plant" data-confidence-level="low" data-confidence-score="22% CONFIDENCE" data-value-text="Double Black Rose">
+          <div class="confidence-badge confidence-low">
+            <span class="confidence-score">22% CONFIDENCE</span>
+            <span class="cell-value">Double Black Rose</span>
+          </div>
+        </td>
+        <td data-confidence-level="low" data-confidence-score="25% CONFIDENCE" data-value-text="Perennial">
+          <div class="confidence-badge confidence-low">
+            <span class="confidence-score">25% CONFIDENCE</span>
+            <span class="cell-value">Perennial</span>
+          </div>
+        </td>
+        <td data-confidence-level="low" data-confidence-score="19% CONFIDENCE" data-value-text="Mid Summer">
+          <div class="confidence-badge confidence-low">
+            <span class="confidence-score">19% CONFIDENCE</span>
+            <span class="cell-value">Mid Summer</span>
+          </div>
+        </td>
+        <td data-confidence-level="low" data-confidence-score="21% CONFIDENCE" data-value-text="Partial Shade">
+          <div class="confidence-badge confidence-low">
+            <span class="confidence-score">21% CONFIDENCE</span>
+            <span class="cell-value">Partial Shade</span>
+          </div>
+        </td>
+        <td data-confidence-level="low" data-confidence-score="24% CONFIDENCE" data-value-text="Twice weekly">
+          <div class="confidence-badge confidence-low">
+            <span class="confidence-score">24% CONFIDENCE</span>
+            <span class="cell-value">Twice weekly</span>
+          </div>
+        </td>
+        <td class="confidence-summary" data-confidence-level="low" data-confidence-score="23% CONFIDENCE" data-value-text="Low · Late season risk">
+          <div class="confidence-badge confidence-low">
+            <span class="confidence-score">23% CONFIDENCE</span>
+            <span class="cell-value">Low · Late season risk</span>
+          </div>
+        </td>
+      </tr>
+      <tr data-row-confidence="medium">
+        <td class="plant" data-confidence-level="medium" data-confidence-score="64% CONFIDENCE" data-value-text="Rock Roses">
+          <div class="confidence-badge confidence-medium">
+            <span class="confidence-score">64% CONFIDENCE</span>
+            <span class="cell-value">Rock Roses</span>
+          </div>
+        </td>
+        <td data-confidence-level="medium" data-confidence-score="59% CONFIDENCE" data-value-text="Perennial">
+          <div class="confidence-badge confidence-medium">
+            <span class="confidence-score">59% CONFIDENCE</span>
+            <span class="cell-value">Perennial</span>
+          </div>
+        </td>
+        <td data-confidence-level="medium" data-confidence-score="55% CONFIDENCE" data-value-text="Late Summer">
+          <div class="confidence-badge confidence-medium">
+            <span class="confidence-score">55% CONFIDENCE</span>
+            <span class="cell-value">Late Summer</span>
+          </div>
+        </td>
+        <td data-confidence-level="low" data-confidence-score="33% CONFIDENCE" data-value-text="Full Sun">
+          <div class="confidence-badge confidence-low">
+            <span class="confidence-score">33% CONFIDENCE</span>
+            <span class="cell-value">Full Sun</span>
+          </div>
+        </td>
+        <td data-confidence-level="medium" data-confidence-score="52% CONFIDENCE" data-value-text="Every other week">
+          <div class="confidence-badge confidence-medium">
+            <span class="confidence-score">52% CONFIDENCE</span>
+            <span class="cell-value">Every other week</span>
+          </div>
+        </td>
+        <td class="confidence-summary" data-confidence-level="medium" data-confidence-score="58% CONFIDENCE" data-value-text="Medium · Heat tolerant">
+          <div class="confidence-badge confidence-medium">
+            <span class="confidence-score">58% CONFIDENCE</span>
+            <span class="cell-value">Medium · Heat tolerant</span>
+          </div>
+        </td>
+      </tr>
+      <tr data-row-confidence="high">
+        <td class="plant" data-confidence-level="high" data-confidence-score="92% CONFIDENCE" data-value-text="Blue Flax">
+          <div class="confidence-badge confidence-high">
+            <span class="confidence-score">92% CONFIDENCE</span>
+            <span class="cell-value">Blue Flax</span>
+          </div>
+        </td>
+        <td data-confidence-level="high" data-confidence-score="88% CONFIDENCE" data-value-text="Annual">
+          <div class="confidence-badge confidence-high">
+            <span class="confidence-score">88% CONFIDENCE</span>
+            <span class="cell-value">Annual</span>
+          </div>
+        </td>
+        <td data-confidence-level="high" data-confidence-score="90% CONFIDENCE" data-value-text="Late Spring">
+          <div class="confidence-badge confidence-high">
+            <span class="confidence-score">90% CONFIDENCE</span>
+            <span class="cell-value">Late Spring</span>
+          </div>
+        </td>
+        <td data-confidence-level="low" data-confidence-score="31% CONFIDENCE" data-value-text="Full Sun">
+          <div class="confidence-badge confidence-low">
+            <span class="confidence-score">31% CONFIDENCE</span>
+            <span class="cell-value">Full Sun</span>
+          </div>
+        </td>
+        <td data-confidence-level="high" data-confidence-score="85% CONFIDENCE" data-value-text="Weekly">
+          <div class="confidence-badge confidence-high">
+            <span class="confidence-score">85% CONFIDENCE</span>
+            <span class="cell-value">Weekly</span>
+          </div>
+        </td>
+        <td class="confidence-summary" data-confidence-level="high" data-confidence-score="91% CONFIDENCE" data-value-text="High · Spring showcase">
+          <div class="confidence-badge confidence-high">
+            <span class="confidence-score">91% CONFIDENCE</span>
+            <span class="cell-value">High · Spring showcase</span>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <script>
+    const controls = document.querySelector('.controls');
+    const buttons = Array.from(controls.querySelectorAll('button'));
+    const rows = Array.from(document.querySelectorAll('tbody tr')).map((row) => {
+      const cells = Array.from(row.querySelectorAll('td[data-confidence-level]')).map((cell) => {
+        const badge = cell.querySelector('.confidence-badge');
+        return {
+          badge,
+          scoreSpan: badge.querySelector('.confidence-score'),
+          valueSpan: badge.querySelector('.cell-value'),
+          level: cell.dataset.confidenceLevel,
+          scoreText: cell.dataset.confidenceScore,
+          valueText: cell.dataset.valueText,
+        };
+      });
+
+      return {
+        row,
+        overallLevel: row.dataset.rowConfidence,
+        cells,
+      };
+    });
+
+    function applyBadgeState(badge, variant) {
+      badge.classList.remove('confidence-high', 'confidence-medium', 'confidence-low', 'confidence-none');
+      badge.classList.add(`confidence-${variant}`);
+    }
+
+    function setActiveButton(activeButton) {
+      buttons.forEach((button) => {
+        const isActive = button === activeButton;
+        button.classList.toggle('active', isActive);
+        button.setAttribute('aria-pressed', String(isActive));
+      });
+    }
+
+    function updateConfidence(filter) {
+      rows.forEach(({ row, overallLevel, cells }) => {
+        const shouldShow = filter === 'all' || filter === 'none' || overallLevel === filter;
+
+        row.hidden = !shouldShow;
+        row.setAttribute('aria-hidden', String(!shouldShow));
+
+        cells.forEach(({ badge, scoreSpan, valueSpan, level, scoreText, valueText }) => {
+          if (filter === 'none') {
+            applyBadgeState(badge, 'none');
+            scoreSpan.textContent = 'No confidence data';
+          } else {
+            applyBadgeState(badge, level);
+            scoreSpan.textContent = scoreText;
+          }
+
+          valueSpan.textContent = valueText;
+        });
+      });
+    }
+
+    controls.addEventListener('click', (event) => {
+      const button = event.target.closest('button');
+      if (!button) return;
+
+      setActiveButton(button);
+      updateConfidence(button.dataset.filter);
+    });
+
+    updateConfidence('all');
+  </script>
+</body>
+</html>
