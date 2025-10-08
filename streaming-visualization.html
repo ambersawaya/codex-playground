@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Streaming Visualization • Garden Insights</title>
+  <link rel="stylesheet" href="assets/css/site.css">
+</head>
+<body class="streaming-page">
+  <div class="site-layout">
+    <header class="site-header">
+      <a class="site-logo" href="index.html">Garden Insights</a>
+      <nav class="site-nav" aria-label="Primary navigation">
+        <a href="index.html">Home</a>
+        <a href="score-filters.html">Score Filters</a>
+        <a href="streaming-visualization.html" aria-current="page">Streaming Visualization</a>
+      </nav>
+    </header>
+
+    <main class="site-main">
+      <section class="dashboard-shell streaming-shell">
+        <header class="page-header">
+          <h1>Streaming Visualization</h1>
+          <h2>Monitor live conditions at a glance</h2>
+          <p class="description">This concept page sketches a layout for incoming telemetry. Combine metric summaries, trend charts, and recent events to keep tabs on plant health as data streams in.</p>
+        </header>
+
+        <div class="streaming-grid">
+          <article class="stream-card">
+            <h3>Live Metrics</h3>
+            <p>Snapshot of the most recent sensor readings. Values refresh as the websocket feed delivers new samples.</p>
+            <ul class="metric-list">
+              <li><span class="metric-label">Soil Moisture</span><span class="metric-value">46%</span></li>
+              <li><span class="metric-label">Ambient Temperature</span><span class="metric-value">71°F</span></li>
+              <li><span class="metric-label">Leaf Humidity</span><span class="metric-value">58%</span></li>
+              <li><span class="metric-label">Nutrient Flow</span><span class="metric-value">Moderate</span></li>
+            </ul>
+          </article>
+
+          <article class="stream-card">
+            <h3>Sunlight Exposure</h3>
+            <p>Overlay real-time lux readings to confirm each plot receives the target range throughout the day.</p>
+            <div class="stream-placeholder" aria-hidden="true"></div>
+            <span class="status-pill status-watch">Trending Warm</span>
+          </article>
+
+          <article class="stream-card">
+            <h3>Irrigation Events</h3>
+            <p>Recent automation activity with quick status cues for each cycle.</p>
+            <ul class="event-list">
+              <li>
+                <span class="event-timestamp">12:40 PM</span>
+                <p class="event-detail">Drip system ran for 12 minutes <span class="status-pill status-good">On track</span></p>
+              </li>
+              <li>
+                <span class="event-timestamp">11:05 AM</span>
+                <p class="event-detail">Reservoir refill completed <span class="status-pill status-good">Balanced</span></p>
+              </li>
+              <li>
+                <span class="event-timestamp">9:32 AM</span>
+                <p class="event-detail">Moisture dipped below target <span class="status-pill status-alert">Investigate</span></p>
+              </li>
+            </ul>
+          </article>
+        </div>
+      </section>
+    </main>
+  </div>
+</body>
+</html>
