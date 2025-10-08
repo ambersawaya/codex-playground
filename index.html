@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Plant Care Confidence Dashboard</title>
+  <style>
+    :root {
+      --green-text: #2e7d32;
+      --green-bg: #edf7ed;
+      --orange-text: #c26b1f;
+      --orange-bg: #fdf3eb;
+      --red-text: #c62828;
+      --red-bg: #fdeff1;
+      --gray-text: #6b7280;
+    }
+
+    body {
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      margin: 2rem;
+      background-color: #f9fafb;
+      color: #1f2933;
+    }
+
+    h1 {
+      margin-bottom: 0.25rem;
+    }
+
+    h2 {
+      margin-top: 0;
+      color: #52606d;
+      font-weight: 500;
+    }
+
+    p.description {
+      max-width: 60ch;
+      color: #616e7c;
+      margin-bottom: 2rem;
+    }
+
+    .controls {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      margin-bottom: 1.5rem;
+    }
+
+    .controls button {
+      border: 1px solid #cbd2d9;
+      background-color: white;
+      border-radius: 999px;
+      padding: 0.5rem 1.25rem;
+      font-size: 0.9rem;
+      cursor: pointer;
+      color: #364152;
+      transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+    }
+
+    .controls button:hover {
+      background-color: #f0f4f8;
+    }
+
+    .controls button.active {
+      background-color: #243b53;
+      border-color: #243b53;
+      color: white;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background-color: white;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 15px 35px rgba(15, 23, 42, 0.08);
+    }
+
+    thead {
+      background-color: #102a43;
+      color: #e4ebf5;
+      text-transform: uppercase;
+      font-size: 0.75rem;
+      letter-spacing: 0.08em;
+    }
+
+    th, td {
+      padding: 0.85rem 1rem;
+      text-align: left;
+      border-bottom: 1px solid #e4e7eb;
+    }
+
+    tbody tr:hover {
+      background-color: #f5f7fa;
+    }
+
+    td.plant {
+      font-weight: 600;
+    }
+
+    .confidence-badge {
+      border-radius: 10px;
+      padding: 0.6rem 0.9rem;
+      display: inline-flex;
+      flex-direction: column;
+      gap: 0.1rem;
+      min-width: 140px;
+      font-size: 0.8rem;
+      transition: background-color 0.2s ease, color 0.2s ease;
+    }
+
+    .confidence-score {
+      font-weight: 700;
+      letter-spacing: 0.04em;
+    }
+
+    .confidence-season {
+      font-size: 1.05rem;
+      font-weight: 500;
+    }
+
+    .confidence-high {
+      background-color: var(--green-bg);
+      color: var(--green-text);
+    }
+
+    .confidence-medium {
+      background-color: var(--orange-bg);
+      color: var(--orange-text);
+    }
+
+    .confidence-low {
+      background-color: var(--red-bg);
+      color: var(--red-text);
+    }
+
+    .confidence-none {
+      background-color: transparent;
+      color: var(--gray-text);
+    }
+  </style>
+</head>
+<body>
+  <h1>Plant Care Confidence Dashboard</h1>
+  <h2>Seasonal guidance for thriving gardens</h2>
+  <p class="description">Explore a snapshot of recommended plants with their ideal growing conditions. Use the confidence filter to highlight the recommendations we feel most certain about for each season.</p>
+
+  <div class="controls" role="group" aria-label="Confidence filters">
+    <button type="button" class="active" aria-pressed="true" data-filter="all">Show All Scores</button>
+    <button type="button" aria-pressed="false" data-filter="high">High Confidence</button>
+    <button type="button" aria-pressed="false" data-filter="medium">Medium Confidence</button>
+    <button type="button" aria-pressed="false" data-filter="low">Low Confidence</button>
+    <button type="button" aria-pressed="false" data-filter="none">No Scores</button>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Plant</th>
+        <th>Bloom Type</th>
+        <th>Season</th>
+        <th>Light</th>
+        <th>Watering</th>
+        <th>Confidence</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="plant">Pansies</td>
+        <td>Annual</td>
+        <td>Spring to Summer</td>
+        <td>Full Sun</td>
+        <td>1-2x per week</td>
+        <td class="confidence" data-confidence-level="high" data-confidence-text="86% CONFIDENCE" data-season-text="Spring">
+          <div class="confidence-badge confidence-high">
+            <span class="confidence-score">86% CONFIDENCE</span>
+            <span class="confidence-season">Spring</span>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td class="plant">California Poppy</td>
+        <td>Annual</td>
+        <td>Early Summer</td>
+        <td>Full Sun</td>
+        <td>Weekly</td>
+        <td class="confidence" data-confidence-level="medium" data-confidence-text="52% CONFIDENCE" data-season-text="Summer">
+          <div class="confidence-badge confidence-medium">
+            <span class="confidence-score">52% CONFIDENCE</span>
+            <span class="confidence-season">Summer</span>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td class="plant">Double Black Rose</td>
+        <td>Perennial</td>
+        <td>Mid Summer</td>
+        <td>Partial Shade</td>
+        <td>Twice weekly</td>
+        <td class="confidence" data-confidence-level="low" data-confidence-text="3% CONFIDENCE" data-season-text="Fall">
+          <div class="confidence-badge confidence-low">
+            <span class="confidence-score">3% CONFIDENCE</span>
+            <span class="confidence-season">Fall</span>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td class="plant">Rock Roses</td>
+        <td>Perennial</td>
+        <td>Late Summer</td>
+        <td>Full Sun</td>
+        <td>Every other week</td>
+        <td class="confidence" data-confidence-level="medium" data-confidence-text="58% CONFIDENCE" data-season-text="Summer">
+          <div class="confidence-badge confidence-medium">
+            <span class="confidence-score">58% CONFIDENCE</span>
+            <span class="confidence-season">Summer</span>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td class="plant">Blue Flax</td>
+        <td>Annual</td>
+        <td>Late Spring</td>
+        <td>Full Sun</td>
+        <td>Weekly</td>
+        <td class="confidence" data-confidence-level="high" data-confidence-text="91% CONFIDENCE" data-season-text="Spring">
+          <div class="confidence-badge confidence-high">
+            <span class="confidence-score">91% CONFIDENCE</span>
+            <span class="confidence-season">Spring</span>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <script>
+    const controls = document.querySelector('.controls');
+    const buttons = Array.from(controls.querySelectorAll('button'));
+    const rowState = Array.from(document.querySelectorAll('tbody tr')).map((row) => {
+      const cell = row.querySelector('td.confidence');
+      return {
+        row,
+        cell,
+        level: cell.dataset.confidenceLevel,
+        scoreText: cell.dataset.confidenceText,
+        seasonText: cell.dataset.seasonText,
+      };
+    });
+
+    function applyBadgeState(cell, variant) {
+      const badge = cell.querySelector('.confidence-badge');
+      badge.classList.remove('confidence-high', 'confidence-medium', 'confidence-low', 'confidence-none');
+      badge.classList.add(`confidence-${variant}`);
+    }
+
+    function setActiveButton(activeButton) {
+      buttons.forEach((button) => {
+        const isActive = button === activeButton;
+        button.classList.toggle('active', isActive);
+        button.setAttribute('aria-pressed', String(isActive));
+      });
+    }
+
+    function updateConfidence(filter) {
+      rowState.forEach(({ row, cell, level, scoreText, seasonText }) => {
+        const scoreSpan = cell.querySelector('.confidence-score');
+        const seasonSpan = cell.querySelector('.confidence-season');
+        const shouldShow = filter === 'all' || filter === 'none' || filter === level;
+
+        row.hidden = !shouldShow;
+        row.setAttribute('aria-hidden', String(!shouldShow));
+
+        if (filter === 'none') {
+          applyBadgeState(cell, 'none');
+          scoreSpan.textContent = 'No confidence data';
+          seasonSpan.textContent = '';
+          return;
+        }
+
+        applyBadgeState(cell, level);
+        scoreSpan.textContent = scoreText;
+        seasonSpan.textContent = seasonText;
+      });
+    }
+
+    controls.addEventListener('click', (event) => {
+      const button = event.target.closest('button');
+      if (!button) return;
+
+      setActiveButton(button);
+      updateConfidence(button.dataset.filter);
+    });
+
+    updateConfidence('all');
+  </script>
+</body>
+</html>
