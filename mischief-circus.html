@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mischief Circus</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --ink: #0a0419;
+      --night: #12072d;
+      --plum: #3b1d64;
+      --violet: #7c3aed;
+      --amber: #ff8a00;
+      --scarlet: #ff3d71;
+      --cream: #fef4df;
+      --muted: #c8b4ff;
+      font-family: "Poppins", "Inter", "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: radial-gradient(circle at top right, rgba(255, 141, 41, 0.18), transparent 40%),
+        radial-gradient(circle at bottom left, rgba(115, 90, 247, 0.25), transparent 46%),
+        var(--night);
+      color: var(--cream);
+      overflow-x: hidden;
+    }
+
+    .texture {
+      position: fixed;
+      inset: 0;
+      background-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 160 160"%3E%3Cg fill="none" stroke="%2313032d" stroke-width="2" opacity="0.34"%3E%3Cpath d="M0 20h160M0 60h160M0 100h160M0 140h160M20 0v160M60 0v160M100 0v160M140 0v160"/%3E%3C/svg%3E');
+      mix-blend-mode: soft-light;
+      opacity: 0.35;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      backdrop-filter: blur(16px);
+      background: rgba(9, 4, 22, 0.72);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      z-index: 10;
+    }
+
+    .top-bar {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: clamp(1rem, 2vw, 1.4rem) clamp(1.2rem, 4vw, 2.6rem);
+      gap: 1rem;
+    }
+
+    .brand-mark {
+      font-size: 1.4rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--cream);
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .brand-mark::before {
+      content: "";
+      width: 0.75rem;
+      height: 0.75rem;
+      border-radius: 999px;
+      background: radial-gradient(circle, var(--scarlet), var(--amber));
+      box-shadow: 0 0 12px rgba(255, 141, 41, 0.8);
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: clamp(1rem, 2.8vw, 2.6rem);
+      margin: 0;
+      padding: 0;
+    }
+
+    nav a {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      text-decoration: none;
+      color: var(--muted);
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      font-size: 0.82rem;
+      transition: color 0.2s ease;
+    }
+
+    nav a::after {
+      content: "";
+      position: absolute;
+      inset-inline: 0;
+      bottom: -0.4rem;
+      height: 2px;
+      transform: scaleX(0);
+      transform-origin: center;
+      background: linear-gradient(90deg, var(--scarlet), var(--amber));
+      transition: transform 0.25s ease;
+    }
+
+    nav a:hover,
+    nav a:focus-visible {
+      color: #fff3ff;
+      outline: none;
+    }
+
+    nav a:hover::after,
+    nav a:focus-visible::after,
+    nav a.active::after {
+      transform: scaleX(1);
+    }
+
+    main {
+      position: relative;
+      z-index: 1;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: clamp(2.5rem, 6vw, 5rem) clamp(1.4rem, 6vw, 3rem) 6rem;
+      display: grid;
+      gap: clamp(3rem, 8vw, 6rem);
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      align-items: center;
+      gap: clamp(2rem, 4vw, 3rem);
+    }
+
+    .hero-copy h1 {
+      margin: 0 0 0.6rem;
+      font-size: clamp(2.5rem, 5vw, 3.8rem);
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+    }
+
+    .hero-copy p {
+      margin: 0 0 1.4rem;
+      max-width: 32ch;
+      color: rgba(255, 236, 222, 0.82);
+      line-height: 1.8;
+    }
+
+    .call-to-action {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.7rem;
+      padding: 0.95rem 1.6rem;
+      border-radius: 999px;
+      border: 0;
+      background: linear-gradient(135deg, var(--scarlet), var(--amber));
+      color: var(--ink);
+      font-size: 0.95rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      cursor: pointer;
+      box-shadow: 0 18px 45px rgba(255, 86, 120, 0.38);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .call-to-action:hover,
+    .call-to-action:focus-visible {
+      transform: translateY(-3px) scale(1.02);
+      box-shadow: 0 22px 60px rgba(255, 141, 41, 0.45);
+      outline: none;
+    }
+
+    .portrait {
+      position: relative;
+      margin: 0;
+      justify-self: center;
+      width: min(360px, 72vw);
+      aspect-ratio: 1 / 1;
+      background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.14), transparent 65%),
+        linear-gradient(145deg, rgba(20, 7, 45, 0.9), rgba(79, 26, 130, 0.4));
+      border-radius: 32px;
+      box-shadow: 0 26px 70px rgba(20, 4, 38, 0.6);
+      display: grid;
+      place-items: center;
+      padding: 1.4rem;
+      overflow: hidden;
+    }
+
+    .portrait img {
+      width: 100%;
+      border-radius: 22px;
+      border: 4px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .clown-mouth {
+      position: absolute;
+      width: 64px;
+      height: 48px;
+      bottom: 20%;
+      left: 50%;
+      transform: translateX(-50%);
+      border-radius: 999px;
+      background: radial-gradient(circle, rgba(255, 61, 113, 0.9), rgba(20, 5, 45, 0.95));
+      box-shadow: 0 0 32px rgba(255, 61, 113, 0.55);
+      opacity: 0.8;
+      filter: blur(1px);
+      pointer-events: none;
+    }
+
+    section {
+      background: linear-gradient(160deg, rgba(30, 13, 62, 0.88), rgba(19, 5, 36, 0.82));
+      border-radius: 28px;
+      padding: clamp(2rem, 5vw, 3.4rem);
+      box-shadow: 0 30px 70px rgba(8, 2, 18, 0.55);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    section h2 {
+      margin-top: 0;
+      font-size: clamp(1.8rem, 3.4vw, 2.4rem);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    section p,
+    section li {
+      color: rgba(255, 231, 247, 0.78);
+      line-height: 1.7;
+    }
+
+    .spotlight-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 1.6rem;
+      margin-top: 1.4rem;
+    }
+
+    .spotlight-card {
+      background: rgba(16, 4, 36, 0.78);
+      border-radius: 20px;
+      padding: 1.4rem;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.02);
+    }
+
+    .spotlight-card h3 {
+      margin-top: 0;
+      margin-bottom: 0.6rem;
+      color: var(--muted);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      font-size: 0.92rem;
+    }
+
+    .spotlight-card p {
+      margin: 0;
+      font-size: 0.95rem;
+    }
+
+    footer {
+      margin-top: auto;
+      text-align: center;
+      color: rgba(255, 217, 245, 0.5);
+      padding: 4rem 1.5rem 2rem;
+      font-size: 0.85rem;
+    }
+
+    #mischief-layer {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 9;
+      overflow: visible;
+    }
+
+    .clown-sprite {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 90px;
+      height: 90px;
+      background: url('assets/clown-portrait.svg') center/cover no-repeat;
+      filter: drop-shadow(0 14px 20px rgba(0, 0, 0, 0.55));
+      border-radius: 28px;
+      transform: translate3d(var(--origin-x, 0px), var(--origin-y, 0px), 0) scale(0.1) rotate(0deg);
+      opacity: 0;
+      transition: transform 0.65s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.6s ease;
+    }
+
+    .clown-sprite.fly {
+      opacity: 1;
+      transform: translate3d(var(--tx), var(--ty), 0) scale(var(--scale)) rotate(var(--rot));
+    }
+
+    .clown-sprite.return {
+      transition: transform 0.9s cubic-bezier(0.6, -0.1, 0.4, 1.4), opacity 0.45s ease;
+      transform: translate3d(var(--return-x), var(--return-y), 0) scale(0.05) rotate(720deg);
+      opacity: 0.6;
+      filter: drop-shadow(0 6px 12px rgba(255, 61, 113, 0.35));
+    }
+
+    @media (max-width: 720px) {
+      nav ul {
+        gap: 1rem;
+      }
+
+      .top-bar {
+        flex-direction: column;
+      }
+
+      header {
+        position: static;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.001ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="texture" aria-hidden="true"></div>
+  <header>
+    <div class="top-bar">
+      <div class="brand-mark">Mischief Circus</div>
+      <nav aria-label="Main">
+        <ul>
+          <li><a href="#welcome" class="active">Showtime</a></li>
+          <li><a href="#story">Lore</a></li>
+          <li><a href="#cast">Clown Crew</a></li>
+          <li><a href="#manifesto">Mischief Manifesto</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <main>
+    <section id="welcome" class="hero">
+      <div class="hero-copy">
+        <h1>Harlequin Havoc</h1>
+        <p>Welcome to the Mischief Circus, a twilight carnival devoted to dizzying laughter and delicious frights. Press the button if you dare—the jester within is hungry for a little pandemonium.</p>
+        <button type="button" class="call-to-action" id="mischief-button" aria-expanded="false">
+          <span>Unleash Mischief</span>
+        </button>
+      </div>
+      <figure class="portrait">
+        <img src="assets/clown-portrait.svg" alt="A harlequin clown with bright eyes, ruffled collar, and a wicked grin." loading="lazy">
+        <span class="clown-mouth" aria-hidden="true"></span>
+      </figure>
+    </section>
+
+    <section id="story">
+      <h2>The Midnight Lore</h2>
+      <p>Long after the fairground lights have dimmed, the Mischief Circus slips from the cracks of the city to perform for anyone brave enough to follow the whisper of calliope notes. Each act is painted in rich amethyst shadows, blood-orange beams, and inky silhouettes inspired by carnival posters of old.</p>
+      <p>We borrow our flair from jester duos, neon-fanged pranksters, and arcade tricksters alike—melding them into a single band of chaos designed to delight, disturb, and dazzle.</p>
+    </section>
+
+    <section id="cast">
+      <h2>Meet the Clown Crew</h2>
+      <div class="spotlight-grid">
+        <article class="spotlight-card">
+          <h3>Captain Cackle</h3>
+          <p>Ringmaster of mischief sporting a harlequin crown and velvet ruff. Captain Cackle choreographs every chaotic entrance and riotous exit.</p>
+        </article>
+        <article class="spotlight-card">
+          <h3>Riot &amp; Rumba</h3>
+          <p>Mirror-mask twins who materialize from arcade shadows. They juggle pumpkin lanterns while baring shark-toothed grins.</p>
+        </article>
+        <article class="spotlight-card">
+          <h3>Guttersnipe Glee</h3>
+          <p>The alleyway trickster whose raspy laugh echoes like an old vacuum motor—handy when it is time to reel the rascals back in.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="manifesto">
+      <h2>Mischief Manifesto</h2>
+      <ul>
+        <li>We celebrate the eerie elegance of painted smiles and razor-sharp charisma.</li>
+        <li>We chase the thrill of playful fear—never cruel, always curious.</li>
+        <li>We believe in grand finales: clowns raining from the heavens and returning in a single dramatic gulp.</li>
+      </ul>
+    </section>
+  </main>
+  <div id="mischief-layer" aria-hidden="true"></div>
+  <footer>
+    Crafted in the spirit of carnival posters, haunted arcades, and unending laughter. © Mischief Circus
+  </footer>
+
+  <script>
+    (function () {
+      const button = document.getElementById('mischief-button');
+      const layer = document.getElementById('mischief-layer');
+      const mouth = document.querySelector('.clown-mouth');
+      let animating = false;
+      let audioContext;
+
+      function ensureAudioContext() {
+        if (!audioContext) {
+          const AudioCtx = window.AudioContext || window.webkitAudioContext;
+          audioContext = new AudioCtx();
+        }
+        return audioContext;
+      }
+
+      function playVacuumSound() {
+        const ctx = ensureAudioContext();
+        const now = ctx.currentTime;
+        const noiseBuffer = ctx.createBuffer(1, ctx.sampleRate * 1.4, ctx.sampleRate);
+        const channelData = noiseBuffer.getChannelData(0);
+        for (let i = 0; i < channelData.length; i++) {
+          channelData[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / channelData.length, 2);
+        }
+        const noise = ctx.createBufferSource();
+        noise.buffer = noiseBuffer;
+        const filter = ctx.createBiquadFilter();
+        filter.type = 'bandpass';
+        filter.frequency.setValueAtTime(220, now);
+        filter.Q.value = 0.9;
+        const gain = ctx.createGain();
+        gain.gain.setValueAtTime(0.0001, now);
+        gain.gain.exponentialRampToValueAtTime(0.5, now + 0.12);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 1.35);
+        noise.connect(filter);
+        filter.connect(gain);
+        gain.connect(ctx.destination);
+        noise.start(now);
+        noise.stop(now + 1.4);
+
+        const oscillator = ctx.createOscillator();
+        oscillator.type = 'sawtooth';
+        oscillator.frequency.setValueAtTime(90, now);
+        oscillator.frequency.exponentialRampToValueAtTime(30, now + 1.4);
+        const oscGain = ctx.createGain();
+        oscGain.gain.setValueAtTime(0.0001, now);
+        oscGain.gain.linearRampToValueAtTime(0.4, now + 0.15);
+        oscGain.gain.exponentialRampToValueAtTime(0.001, now + 1.4);
+        oscillator.connect(oscGain);
+        oscGain.connect(ctx.destination);
+        oscillator.start(now);
+        oscillator.stop(now + 1.4);
+      }
+
+      function unleash() {
+        if (animating) {
+          return;
+        }
+        animating = true;
+        button.setAttribute('aria-expanded', 'true');
+        const buttonRect = button.getBoundingClientRect();
+        const mouthRect = mouth.getBoundingClientRect();
+        const sprites = [];
+        const clownCount = 36;
+
+        for (let i = 0; i < clownCount; i++) {
+          const sprite = document.createElement('div');
+          sprite.className = 'clown-sprite';
+          const size = 64 + Math.random() * 64;
+          sprite.style.width = `${size}px`;
+          sprite.style.height = `${size}px`;
+          const startX = buttonRect.left + buttonRect.width / 2 - size / 2;
+          const startY = buttonRect.top + buttonRect.height / 2 - size / 2;
+          sprite.style.left = `${startX}px`;
+          sprite.style.top = `${startY}px`;
+
+          const destX = Math.random() * window.innerWidth - size / 2;
+          const destY = Math.random() * window.innerHeight - size / 2;
+          sprite.style.setProperty('--tx', `${destX - startX}px`);
+          sprite.style.setProperty('--ty', `${destY - startY}px`);
+          const rotation = (Math.random() * 720 - 360).toFixed(2) + 'deg';
+          sprite.style.setProperty('--rot', rotation);
+          sprite.style.setProperty('--scale', (0.6 + Math.random() * 1.2).toFixed(2));
+
+          const hueRotate = Math.floor(Math.random() * 40 - 20);
+          const saturate = 0.9 + Math.random() * 0.4;
+          sprite.style.filter = `drop-shadow(0 14px 24px rgba(0,0,0,0.55)) hue-rotate(${hueRotate}deg) saturate(${saturate})`;
+
+          layer.appendChild(sprite);
+          sprites.push(sprite);
+
+          requestAnimationFrame(() => {
+            sprite.classList.add('fly');
+          });
+        }
+
+        setTimeout(() => {
+          playVacuumSound();
+          const updatedMouthRect = mouth.getBoundingClientRect();
+          sprites.forEach((sprite) => {
+            const rect = sprite.getBoundingClientRect();
+            const dx = updatedMouthRect.left + updatedMouthRect.width / 2 - (rect.left + rect.width / 2);
+            const dy = updatedMouthRect.top + updatedMouthRect.height / 2 - (rect.top + rect.height / 2);
+            sprite.style.setProperty('--return-x', `${dx}px`);
+            sprite.style.setProperty('--return-y', `${dy}px`);
+            sprite.classList.remove('fly');
+            sprite.classList.add('return');
+          });
+        }, 8000);
+
+        setTimeout(() => {
+          sprites.forEach((sprite) => sprite.remove());
+          button.setAttribute('aria-expanded', 'false');
+          animating = false;
+        }, 9500);
+      }
+
+      button.addEventListener('click', unleash);
+    })();
+  </script>
+</body>
+</html>
