@@ -103,7 +103,7 @@
       transition: color 0.2s ease;
     }
 
-    nav a::after {
+    nav a[data-section]::after {
       content: "";
       position: absolute;
       inset-inline: 0;
@@ -121,10 +121,22 @@
       outline: none;
     }
 
-    nav a:hover::after,
-    nav a:focus-visible::after,
-    nav a.active::after {
+    nav a[data-section]:hover::after,
+    nav a[data-section]:focus-visible::after,
+    nav a[data-section].active::after {
       transform: scaleX(1);
+    }
+
+    nav .global-link a {
+      font-size: 0.74rem;
+      letter-spacing: 0.14em;
+      color: rgba(254, 244, 223, 0.8);
+      opacity: 0.9;
+    }
+
+    nav .global-link a:hover,
+    nav .global-link a:focus-visible {
+      color: #fff;
     }
 
     main {
@@ -343,10 +355,11 @@
       <div class="brand-mark">Mischief Circus</div>
       <nav aria-label="Main">
         <ul>
-          <li><a href="#welcome" class="active">Showtime</a></li>
-          <li><a href="#story">Lore</a></li>
-          <li><a href="#cast">Clown Crew</a></li>
-          <li><a href="#manifesto">Mischief Manifesto</a></li>
+          <li class="global-link"><a href="index.html">&#8592; Playground Index</a></li>
+          <li><a href="#welcome" class="active" data-section="true">Showtime</a></li>
+          <li><a href="#story" data-section="true">Lore</a></li>
+          <li><a href="#cast" data-section="true">Clown Crew</a></li>
+          <li><a href="#manifesto" data-section="true">Mischief Manifesto</a></li>
         </ul>
       </nav>
     </div>
