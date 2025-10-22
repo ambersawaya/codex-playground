@@ -6,14 +6,16 @@
   <title>Mischief Circus</title>
   <style>
     :root {
-      color-scheme: light;
-      --background: #f8fafc;
-      --card: #ffffff;
-      --text-primary: #0f172a;
-      --text-secondary: #475569;
-      --accent: #2563eb;
-      --accent-soft: rgba(37, 99, 235, 0.08);
-      --accent-border: rgba(37, 99, 235, 0.15);
+      color-scheme: dark;
+      --ink: #0a0419;
+      --night: #12072d;
+      --plum: #3b1d64;
+      --violet: #7c3aed;
+      --amber: #ff8a00;
+      --scarlet: #ff3d71;
+      --cream: #fef4df;
+      --muted: #c8b4ff;
+      font-family: "Poppins", "Inter", "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
     }
 
     * {
@@ -30,12 +32,23 @@
       overflow-x: hidden;
     }
 
-    main {
-      width: min(680px, 100%);
-      background: var(--card);
-      border-radius: 20px;
-      padding: clamp(2rem, 4vw, 3rem);
-      box-shadow: 0 30px 60px -40px rgba(15, 23, 42, 0.35);
+    .texture {
+      position: fixed;
+      inset: 0;
+      background-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 160 160"%3E%3Cg fill="none" stroke="%2313032d" stroke-width="2" opacity="0.34"%3E%3Cpath d="M0 20h160M0 60h160M0 100h160M0 140h160M20 0v160M60 0v160M100 0v160M140 0v160"/%3E%3C/svg%3E');
+      mix-blend-mode: soft-light;
+      opacity: 0.35;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      backdrop-filter: blur(16px);
+      background: rgba(9, 4, 22, 0.72);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      z-index: 10;
     }
 
     .top-bar {
@@ -77,12 +90,10 @@
     }
 
     nav a {
-      display: block;
-      padding: 0.85rem 1rem;
-      border-radius: 14px;
-      border: 1px solid var(--accent-border);
-      color: var(--accent);
-      font-weight: 600;
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
       text-decoration: none;
       color: var(--muted);
       font-weight: 600;
@@ -92,7 +103,7 @@
       transition: color 0.2s ease;
     }
 
-    nav a::after {
+    nav a[data-section]::after {
       content: "";
       position: absolute;
       inset-inline: 0;
@@ -106,8 +117,81 @@
 
     nav a:hover,
     nav a:focus-visible {
-      background-color: var(--accent-soft);
-      border-color: rgba(37, 99, 235, 0.3);
+      color: #fff3ff;
+      outline: none;
+    }
+
+    nav a[data-section]:hover::after,
+    nav a[data-section]:focus-visible::after,
+    nav a[data-section].active::after {
+      transform: scaleX(1);
+    }
+
+    nav .global-link a {
+      font-size: 0.74rem;
+      letter-spacing: 0.14em;
+      color: rgba(254, 244, 223, 0.8);
+      opacity: 0.9;
+    }
+
+    nav .global-link a:hover,
+    nav .global-link a:focus-visible {
+      color: #fff;
+    }
+
+    main {
+      position: relative;
+      z-index: 1;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: clamp(2.5rem, 6vw, 5rem) clamp(1.4rem, 6vw, 3rem) 6rem;
+      display: grid;
+      gap: clamp(3rem, 8vw, 6rem);
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      align-items: center;
+      gap: clamp(2rem, 4vw, 3rem);
+    }
+
+    .hero-copy h1 {
+      margin: 0 0 0.6rem;
+      font-size: clamp(2.5rem, 5vw, 3.8rem);
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+    }
+
+    .hero-copy p {
+      margin: 0 0 1.4rem;
+      max-width: 32ch;
+      color: rgba(255, 236, 222, 0.82);
+      line-height: 1.8;
+    }
+
+    .call-to-action {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.7rem;
+      padding: 0.95rem 1.6rem;
+      border-radius: 999px;
+      border: 0;
+      background: linear-gradient(135deg, var(--scarlet), var(--amber));
+      color: var(--ink);
+      font-size: 0.95rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      cursor: pointer;
+      box-shadow: 0 18px 45px rgba(255, 86, 120, 0.38);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .call-to-action:hover,
+    .call-to-action:focus-visible {
+      transform: translateY(-3px) scale(1.02);
+      box-shadow: 0 22px 60px rgba(255, 141, 41, 0.45);
       outline: none;
     }
 
@@ -262,30 +346,6 @@
         scroll-behavior: auto !important;
       }
     }
-
-    .tag {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.35rem;
-      font-size: 0.8rem;
-      font-weight: 600;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-      padding: 0.35rem 0.6rem;
-      border-radius: 999px;
-      background: rgba(37, 99, 235, 0.1);
-      color: #1d4ed8;
-      margin-bottom: 0.4rem;
-    }
-
-    .tag::before {
-      content: "";
-      width: 0.45rem;
-      height: 0.45rem;
-      border-radius: 999px;
-      background: currentColor;
-      opacity: 0.8;
-    }
   </style>
 </head>
 <body>
@@ -295,10 +355,11 @@
       <div class="brand-mark">Mischief Circus</div>
       <nav aria-label="Main">
         <ul>
-          <li><a href="#welcome" class="active">Showtime</a></li>
-          <li><a href="#story">Lore</a></li>
-          <li><a href="#cast">Clown Crew</a></li>
-          <li><a href="#manifesto">Mischief Manifesto</a></li>
+          <li class="global-link"><a href="index.html">&#8592; Playground Index</a></li>
+          <li><a href="#welcome" class="active" data-section="true">Showtime</a></li>
+          <li><a href="#story" data-section="true">Lore</a></li>
+          <li><a href="#cast" data-section="true">Clown Crew</a></li>
+          <li><a href="#manifesto" data-section="true">Mischief Manifesto</a></li>
         </ul>
       </nav>
     </div>
@@ -345,13 +406,9 @@
     <section id="manifesto">
       <h2>Mischief Manifesto</h2>
       <ul>
-        <li><a href="score-filters.html">Score Filters Prototype</a></li>
-        <li><a href="streaming-visualization.html">Streaming Visualization Prototype</a></li>
-        <li>
-          <span class="tag">New</span>
-          <a href="mischief-circus.html">Mischief Circus Experience</a>
-        </li>
-        <li><span class="coming-soon">More playground pages coming soon</span></li>
+        <li>We celebrate the eerie elegance of painted smiles and razor-sharp charisma.</li>
+        <li>We chase the thrill of playful fear—never cruel, always curious.</li>
+        <li>We believe in grand finales: clowns raining from the heavens and returning in a single dramatic gulp.</li>
       </ul>
     </section>
   </main>
